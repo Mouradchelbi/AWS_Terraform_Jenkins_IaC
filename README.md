@@ -48,7 +48,7 @@ This project provides automated Infrastructure as Code (IaC) for deploying a Jen
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/AWS_Terraform_Jenkins_IaC.git
+git clone https://github.com/Mouradchelbi/AWS_Terraform_Jenkins_IaC.git
 cd AWS_Terraform_Jenkins_IaC/jenkins-terraform
 ```
 
