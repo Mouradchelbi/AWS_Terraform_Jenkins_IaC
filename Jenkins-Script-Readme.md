@@ -4,7 +4,7 @@
 
 ## Overview
 
-The simplified jenkins-install.sh script performs a basic Jenkins installation without JCasC configuration, eliminating complexity and encoding issues.
+The simplified jenkins-install.sh script performs a basic Jenkins installation without JCasC configuration
 
 ## Phase 1: System Initialization (0-30 seconds)
 
