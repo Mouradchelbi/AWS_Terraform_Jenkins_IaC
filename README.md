@@ -94,6 +94,61 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 ---
 
+
+
+Main terraform resources and configuration
+
+- **AWS Provider Configuration**  
+  Uses a dedicated AWS CLI profile (`terraform-user`) with least privilege. 
+  The AWS region, environment, project name, and owner tags are configurable.
+
+- **Variables**  
+  Configurable via `terraform.tfvars` or defaults, including:
+  - AWS region (e.g., `us-east-1`)
+  - Environment (`dev`, `staging`, `prod`)
+  - EC2 instance type (default `t2.micro`)
+  - EC2 Key Pair name for SSH access
+  - Allowed CIDR blocks for SSH and Jenkins web access
+  - Root volume size and encryption
+
+- **Data Sources**  
+  - Fetches the latest Ubuntu 22.04 LTS AMI dynamically
+  - Selects the first available VPC and subnet to deploy resources
+
+- **Security Groups**  
+  - Defines a security group for the Jenkins server to allow:
+    - SSH access on port 22 from allowed CIDRs
+    - Jenkins web interface access on port 8080 from allowed CIDRs
+    - All outbound internet traffic
+
+- **IAM Role and Policy**  
+  - Creates an EC2 IAM role with least privilege to allow:
+    - Instance metadata and security group querying
+    - Managing security group ingress rules for Jenkins setup
+  - Associates this role using an instance profile
+
+- **EC2 Instance**  
+  - Deploys a Linux VM running Ubuntu with:
+    - Configured security group
+    - Public IP enabled
+    - User data script (`jenkins-install.sh`) to install and start Jenkins automatically
+    - Root EBS volume with encryption and configurable size
+    - Tags for management and cost awareness (e.g., `AutoShutdown`)
+    - Disable API termination protection for non-prod environments
+
+- **Timeouts and Dependencies**  
+  Ensures the instance creation respects timeouts and depends on security group rules.
+
+***
+
+### Usage Summary
+
+- Customize variables in `terraform.tfvars`  
+- Run `terraform init` and `terraform apply` to provision  
+- Terraform provisions all AWS resources and bootstraps Jenkins server seamlessly  
+- Jenkins becomes accessible at the EC2 public IP on port 8080 after deployment
+
+
 ## The jenkins-install.sh User Data Script
 
 The script automatically:
