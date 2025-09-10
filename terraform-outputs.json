@@ -1,0 +1,270 @@
+{
+  "account_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "685939060042"
+  },
+  "ami_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ami-0bbdd8c17ed981ef9"
+  },
+  "cost_information": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "cost_optimization_tips": [
+          "tuple",
+          [
+            "string",
+            "string",
+            "string",
+            "string"
+          ]
+        ],
+        "estimated_monthly_cost": "string",
+        "instance_type": "string",
+        "storage_size": "string",
+        "storage_type": "string"
+      }
+    ],
+    "value": {
+      "cost_optimization_tips": [
+        "Stop instance when not in use",
+        "Use scheduled start/stop",
+        "Monitor with CloudWatch",
+        "Consider spot instances for dev"
+      ],
+      "estimated_monthly_cost": "~$8-10 USD (if running 24/7)",
+      "instance_type": "t2.micro",
+      "storage_size": "20GB",
+      "storage_type": "gp3"
+    }
+  },
+  "deployment_summary": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "created_by": "string",
+        "deployment_status": "string",
+        "environment": "string",
+        "instance_id": "string",
+        "instance_type": "string",
+        "jenkins_admin_login": "string",
+        "jenkins_developer_login": "string",
+        "jenkins_jcasc_enabled": "bool",
+        "jenkins_setup_wizard": "string",
+        "jenkins_url": "string",
+        "managed_by": "string",
+        "project_name": "string",
+        "ready_to_use": "bool",
+        "region": "string",
+        "security_group": "string",
+        "ssh_access": "string",
+        "subnet_id": "string",
+        "vpc_cidr": "string",
+        "vpc_id": "string"
+      }
+    ],
+    "value": {
+      "created_by": "terraform-user",
+      "deployment_status": "complete",
+      "environment": "dev",
+      "instance_id": "i-0cd23d2b166b549de",
+      "instance_type": "t2.micro",
+      "jenkins_admin_login": "admin / admin123",
+      "jenkins_developer_login": "developer / dev123",
+      "jenkins_jcasc_enabled": true,
+      "jenkins_setup_wizard": "automatically skipped",
+      "jenkins_url": "http://3.92.214.32:8080",
+      "managed_by": "Terraform",
+      "project_name": "jenkins-automation",
+      "ready_to_use": true,
+      "region": "us-east-1",
+      "security_group": "sg-0fd45145c1ab3862c",
+      "ssh_access": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32",
+      "subnet_id": "subnet-09b5d0e80f40e1b30",
+      "vpc_cidr": "172.31.0.0/16",
+      "vpc_id": "vpc-03498a6e3f245ca42"
+    }
+  },
+  "iam_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::685939060042:role/jenkins-automation-dev-ec2-20250909123609178200000002"
+  },
+  "instance_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "i-0cd23d2b166b549de"
+  },
+  "instance_private_ip": {
+    "sensitive": false,
+    "type": "string",
+    "value": "172.31.86.255"
+  },
+  "instance_profile_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::685939060042:instance-profile/jenkins-automation-dev-20250909123610039000000004"
+  },
+  "instance_public_dns": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ec2-3-92-214-32.compute-1.amazonaws.com"
+  },
+  "instance_public_ip": {
+    "sensitive": false,
+    "type": "string",
+    "value": "3.92.214.32"
+  },
+  "jenkins_admin_password": {
+    "sensitive": true,
+    "type": "string",
+    "value": "admin123"
+  },
+  "jenkins_admin_user": {
+    "sensitive": false,
+    "type": "string",
+    "value": "admin"
+  },
+  "jenkins_configuration_location": {
+    "sensitive": false,
+    "type": "string",
+    "value": "/var/lib/jenkins/casc_configs/jenkins.yaml"
+  },
+  "jenkins_developer_password": {
+    "sensitive": true,
+    "type": "string",
+    "value": "dev123"
+  },
+  "jenkins_developer_user": {
+    "sensitive": false,
+    "type": "string",
+    "value": "developer"
+  },
+  "jenkins_features": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "jcasc_enabled": "bool",
+        "memory_optimized": "string",
+        "plugins_installed": "string",
+        "security_enabled": "bool",
+        "setup_wizard": "string"
+      }
+    ],
+    "value": {
+      "jcasc_enabled": true,
+      "memory_optimized": "t2.micro",
+      "plugins_installed": "automatically",
+      "security_enabled": true,
+      "setup_wizard": "skipped"
+    }
+  },
+  "jenkins_initial_password_command": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo cat /var/lib/jenkins/secrets/initialAdminPassword'"
+  },
+  "jenkins_log_command": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo cat /var/log/jenkins-install.log'"
+  },
+  "jenkins_login_instructions": {
+    "sensitive": false,
+    "type": "string",
+    "value": "================================\r\nJenkins Access Instructions\r\n================================\r\n    \r\nURL: http://3.92.214.32:8080\r\n    \r\nLogin Credentials:\r\n- Admin User: admin / admin123\r\n- Developer User: developer / dev123\r\n    \r\nFeatures:\r\n- Setup wizard automatically skipped\r\n- Configuration as Code (JCasC) enabled\r\n- Essential plugins pre-installed\r\n- Sample jobs ready to run\r\n    \r\nSample Jobs Created:\r\n- sample-pipeline (Basic pipeline example)\r\n- ci-cd-pipelines/terraform-pipeline (Terraform template)\r\n    \r\n================================\r\nReady to use immediately!\r\n================================\r\n"
+  },
+  "jenkins_restart_command": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl restart jenkins'"
+  },
+  "jenkins_sample_jobs": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "sample-pipeline",
+      "ci-cd-pipelines/terraform-pipeline"
+    ]
+  },
+  "jenkins_service_status_command": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl status jenkins'"
+  },
+  "jenkins_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "http://3.92.214.32:8080"
+  },
+  "quick_access_commands": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "check_jenkins_http": "string",
+        "check_jenkins_service": "string",
+        "open_jenkins_url": "string",
+        "restart_jenkins": "string",
+        "ssh_to_instance": "string",
+        "start_jenkins": "string",
+        "stop_jenkins": "string",
+        "view_install_logs": "string",
+        "view_jenkins_logs": "string"
+      }
+    ],
+    "value": {
+      "check_jenkins_http": "curl -I http://3.92.214.32:8080",
+      "check_jenkins_service": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl status jenkins'",
+      "open_jenkins_url": "http://3.92.214.32:8080",
+      "restart_jenkins": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl restart jenkins'",
+      "ssh_to_instance": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32",
+      "start_jenkins": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl start jenkins'",
+      "stop_jenkins": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo systemctl stop jenkins'",
+      "view_install_logs": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo cat /var/log/jenkins-install.log'",
+      "view_jenkins_logs": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32 'sudo journalctl -u jenkins -f'"
+    }
+  },
+  "region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-1"
+  },
+  "security_group_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "sg-0fd45145c1ab3862c"
+  },
+  "ssh_command": {
+    "sensitive": false,
+    "type": "string",
+    "value": "ssh -i ~/.ssh/VP_profile-prod.pem ubuntu@3.92.214.32"
+  },
+  "subnet_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "subnet-09b5d0e80f40e1b30"
+  },
+  "vpc_cidr": {
+    "sensitive": false,
+    "type": "string",
+    "value": "172.31.0.0/16"
+  },
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-03498a6e3f245ca42"
+  }
+}

@@ -1,0 +1,262 @@
+# ============================================================================
+# .gitignore - Security and Performance File Exclusions
+# Prevents sensitive files from being committed to Git
+# ============================================================================
+
+# ============================================================================
+# Terraform Files
+# ============================================================================
+# State files (contain sensitive information and resource details)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Plan files (may contain sensitive data)
+*.tfplan
+*.tfplan.*
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+
+# Variable files (may contain sensitive data like IP addresses, keys)
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+
+# Override files (used for local development)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform CLI configuration files
+.terraformrc
+terraform.rc
+
+# ============================================================================
+# AWS Credentials and Keys
+# ============================================================================
+# AWS credentials directory
+.aws/
+aws-credentials
+aws-config
+
+# SSH private keys
+*.pem
+*.key
+*.ppk
+id_rsa*
+id_ed25519*
+
+# AWS access keys (if accidentally created as files)
+credentials
+access-keys.csv
+*.csv
+
+# ============================================================================
+# VS Code Settings (Project-specific)
+# ============================================================================
+# VS Code workspace settings (may contain local paths)
+.vscode/settings.json
+.vscode/launch.json
+
+# Keep shared configurations
+!.vscode/tasks.json
+!.vscode/extensions.json
+!.vscode/*.code-workspace
+
+# ============================================================================
+# Operating System Files
+# ============================================================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ============================================================================
+# IDE and Editor Files
+# ============================================================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ============================================================================
+# Logs and Temporary Files
+# ============================================================================
+# Log files
+*.log
+logs/
+log/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Temporary directories
+tmp/
+temp/
+.tmp/
+
+# Cache directories
+.cache/
+cache/
+
+# ============================================================================
+# Backup Files
+# ============================================================================
+# General backups
+*.bak
+*.backup
+*.old
+*.orig
+
+# Terraform backups
+*.tf.bak
+*.tfvars.bak
+
+# ============================================================================
+# Scripts and Executables
+# ============================================================================
+# Compiled scripts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Scripts with embedded credentials (be careful)
+*credentials*
+*secret*
+*password*
+
+# ============================================================================
+# Documentation
+# ============================================================================
+# Generated documentation
+docs/_build/
+site/
+
+# ============================================================================
+# Dependencies and Package Managers
+# ============================================================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.Python
+venv/
+env/
+
+# ============================================================================
+# CI/CD and Deployment
+# ============================================================================
+# GitHub Actions secrets
+.github/secrets/
+
+# Docker
+.dockerignore
+Dockerfile.local
+
+# Kubernetes
+*.kubeconfig
+kube-config
+
+# ============================================================================
+# Project-Specific Exclusions
+# ============================================================================
+# Jenkins-related files that shouldn't be in Git
+jenkins-data/
+jenkins-home/
+jenkins.war
+
+# Local development files
+local-*
+dev-*
+test-*
+
+# Configuration overrides
+local.tf
+local.tfvars
+dev.tfvars
+
+# ============================================================================
+# Security Scanner Exclusions
+# ============================================================================
+# Files that might contain secrets
+secrets/
+private/
+confidential/
+.secrets
+.env
+.env.local
+.env.production
+
+# ============================================================================
+# Comments for Team Members
+# ============================================================================
+# 
+# IMPORTANT: 
+# - Always review files before committing
+# - Use 'git status' to check what's being added
+# - Never commit files with credentials or sensitive data
+# - If you accidentally commit secrets, rotate them immediately
+# - Use 'git log --oneline' to review recent commits
+#
+# To check what would be committed:
+# git add . --dry-run
+#
+# To see ignored files:
+# git status --ignored
+#
+# To temporarily add an ignored file:
+# git add -f filename
+#

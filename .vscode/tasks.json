@@ -1,0 +1,433 @@
+{
+  // ============================================================================
+  // VS Code Tasks Configuration for Terraform Jenkins Project
+  // Provides convenient automation tasks for Terraform workflow
+  // ============================================================================
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // ========================================================================
+      // Terraform Initialize Task
+      // ========================================================================
+      "label": "Terraform: Initialize",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["init"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user",
+          "TF_LOG": "INFO"
+        }
+      },
+      "problemMatcher": [],
+      "detail": "Initialize Terraform working directory and download providers"
+    },
+    {
+      // ========================================================================
+      // Terraform Validate Task
+      // ========================================================================
+      "label": "Terraform: Validate",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["validate"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user"
+        }
+      },
+      "dependsOn": "Terraform: Initialize",
+      "problemMatcher": [],
+      "detail": "Validate Terraform configuration files"
+    },
+    {
+      // ========================================================================
+      // Terraform Format Task
+      // ========================================================================
+      "label": "Terraform: Format",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["fmt", "-recursive"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user"
+        }
+      },
+      "problemMatcher": [],
+      "detail": "Format Terraform configuration files"
+    },
+    {
+      // ========================================================================
+      // Terraform Plan Task
+      // ========================================================================
+      "label": "Terraform: Plan",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["plan", "-out=tfplan", "-var-file=terraform.tfvars"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user",
+          "TF_LOG": "INFO"
+        }
+      },
+      "dependsOn": "Terraform: Validate",
+      "problemMatcher": [],
+      "detail": "Create and save a Terraform execution plan"
+    },
+    {
+      // ========================================================================
+      // Terraform Apply Task
+      // ========================================================================
+      "label": "Terraform: Apply",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["apply", "tfplan"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user",
+          "TF_LOG": "INFO"
+        }
+      },
+      "dependsOn": "Terraform: Plan",
+      "problemMatcher": [],
+      "detail": "Apply the Terraform plan to create infrastructure"
+    },
+    {
+      // ========================================================================
+      // Terraform Apply (Auto-Approve) Task
+      // ========================================================================
+      "label": "Terraform: Apply (Auto-Approve)",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["apply", "-auto-approve", "-var-file=terraform.tfvars"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user",
+          "TF_LOG": "INFO"
+        }
+      },
+      "dependsOn": "Terraform: Validate",
+      "problemMatcher": [],
+      "detail": "Apply Terraform configuration without manual approval (USE WITH CAUTION)"
+    },
+    {
+      // ========================================================================
+      // Terraform Destroy Task
+      // ========================================================================
+      "label": "Terraform: Destroy",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["destroy", "-var-file=terraform.tfvars"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user",
+          "TF_LOG": "INFO"
+        }
+      },
+      "problemMatcher": [],
+      "detail": "Destroy Terraform-managed infrastructure (DESTRUCTIVE OPERATION)"
+    },
+    {
+      // ========================================================================
+      // Terraform Output Task
+      // ========================================================================
+      "label": "Terraform: Show Outputs",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["output", "-json"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user"
+        }
+      },
+      "problemMatcher": [],
+      "detail": "Display Terraform outputs in JSON format"
+    },
+    {
+      // ========================================================================
+      // AWS Credential Verification Task
+      // ========================================================================
+      "label": "AWS: Verify Credentials",
+      "type": "shell",
+      "command": "aws",
+      "args": ["sts", "get-caller-identity", "--profile", "terraform-user"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "detail": "Verify AWS credentials for terraform-user"
+    },
+    {
+      // ========================================================================
+      // AWS List EC2 Instances Task
+      // ========================================================================
+      "label": "AWS: List EC2 Instances",
+      "type": "shell",
+      "command": "aws",
+      "args": [
+        "ec2", "describe-instances",
+        "--profile", "terraform-user",
+        "--query", "Reservations[*].Instances[*].[InstanceId,State.Name,InstanceType,PublicIpAddress,Tags[?Key=='Name'].Value|[0]]",
+        "--output", "table"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "List all EC2 instances in current region"
+    },
+    {
+      // ========================================================================
+      // SSH to Jenkins Instance Task
+      // ========================================================================
+      "label": "SSH: Connect to Jenkins Instance",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-i", "${input:sshKeyPath}",
+        "ubuntu@${input:instanceIP}",
+        "-o", "StrictHostKeyChecking=no"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "detail": "SSH into the Jenkins EC2 instance"
+    },
+    {
+      // ========================================================================
+      // Check Jenkins Status Task
+      // ========================================================================
+      "label": "Jenkins: Check Status",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-i", "${input:sshKeyPath}",
+        "ubuntu@${input:instanceIP}",
+        "-o", "StrictHostKeyChecking=no",
+        "sudo systemctl status jenkins --no-pager"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Check Jenkins service status on EC2 instance"
+    },
+    {
+      // ========================================================================
+      // Get Jenkins Initial Password Task
+      // ========================================================================
+      "label": "Jenkins: Get Initial Password",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-i", "${input:sshKeyPath}",
+        "ubuntu@${input:instanceIP}",
+        "-o", "StrictHostKeyChecking=no",
+        "sudo cat /var/lib/jenkins/secrets/initialAdminPassword"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Retrieve Jenkins initial admin password"
+    },
+    {
+      // ========================================================================
+      // View Jenkins Logs Task
+      // ========================================================================
+      "label": "Jenkins: View Installation Logs",
+      "type": "shell",
+      "command": "ssh",
+      "args": [
+        "-i", "${input:sshKeyPath}",
+        "ubuntu@${input:instanceIP}",
+        "-o", "StrictHostKeyChecking=no",
+        "sudo journalctl -u cloud-final --no-pager -n 50"
+      ],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "View Jenkins installation logs on EC2 instance"
+    },
+    {
+      // ========================================================================
+      // Cleanup Terraform Files Task
+      // ========================================================================
+      "label": "Terraform: Clean Workspace",
+      "type": "shell",
+      "command": "rm",
+      "args": ["-rf", ".terraform", "terraform.tfstate*", "tfplan", "*.log"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "detail": "Clean up Terraform working directory and state files"
+    },
+    {
+      // ========================================================================
+      // Open Jenkins in Browser Task
+      // ========================================================================
+      "label": "Jenkins: Open in Browser",
+      "type": "shell",
+      "command": "terraform",
+      "args": ["output", "-raw", "jenkins_url"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "AWS_PROFILE": "terraform-user"
+        }
+      },
+      "problemMatcher": [],
+      "detail": "Get Jenkins URL to open in browser"
+    }
+  ],
+  
+  // ============================================================================
+  // Input Definitions for Interactive Tasks
+  // ============================================================================
+  "inputs": [
+    {
+      "id": "instanceIP",
+      "description": "Enter the EC2 instance public IP address",
+      "type": "promptString",
+      "default": ""
+    },
+    {
+      "id": "sshKeyPath",
+      "description": "Enter the path to your SSH private key",
+      "type": "promptString",
+      "default": "~/.ssh/my-jenkins-key.pem"
+    },
+    {
+      "id": "keyPairName",
+      "description": "Enter your EC2 key pair name",
+      "type": "promptString",
+      "default": "my-jenkins-key"
+    }
+  ]
+}
