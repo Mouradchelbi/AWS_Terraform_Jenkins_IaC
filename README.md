@@ -1,4 +1,4 @@
-# AWS_Terraform_Jenkins_IaC
+# AWS Instance t2 micro free tier_Terraform_Jenkins_IaC
 
 ## Overview
 
@@ -10,7 +10,7 @@ This project provides automated Infrastructure as Code (IaC) for deploying a Jen
 
 ### Key Features
 
-- End-to-end AWS setup with Terraform (VPC, subnet, security group, EC2)
+- End-to-end AWS setup with Terraform (VPC, subnet, security group, EC2 -T2 micro free tier)
 - Jenkins is fully installed and started on EC2 via the user data script
 - Automated port access using AWS CLI from within the instance
 - Optimized for low-memory instances (e.g., t2.micro) with swap and JVM tuning
